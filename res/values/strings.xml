@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">TESIS.v3</string>
+    <string name="action_settings">設定</string>
+    <string name="reload_settings">重新整理</string>
+    <string name="datePicker_settings">選擇日期</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="spinner_item">spinner_item</string>
+    <string name="title">TESIS</string>
+    <string name="summary">背景構造簡介</string>
+    <string name="info_head">・</string>
+    <string name="info1">本應用程式將每分鐘自動更新地震資料，如要避免支付超額資料用量費用，建議使用Wi-Fi執行。</string>
+    <string name="info2">本應用程式將使用裝置的位置資料，如需更精確的位置資料，建議開啓GPS。</string>
+    <string name="info3">如尚未開啟位置資料存取權限，請至「設定」>「位置」允許存取權限。</string>
+    <string name="info_end">請問您是否要繼續？</string>
+    <string name="confirm">確定</string>
+
+</resources>

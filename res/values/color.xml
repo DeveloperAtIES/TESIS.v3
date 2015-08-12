@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<color name="white">#FFFFFF</color>
+	<color name="black">#000000</color>
+	<color name="yellow">#FFFF00</color>
+	<color name="lightgray">#D3D3D3</color>
+	<color name="lightyellow">#FFFFE0</color>
+	<color name="darkgray">#767676</color>
+	<color name="Indigo">#4B0082</color>
+	<color name="gold">#FFD700</color>
+	<color name="brown">#A52A2A</color>
+	<color name="lightyellowback">#33FFFFE0</color>
+	<color name="yellowback">#80FFFF00</color>
+	<color name="blackback">#80000000</color>
+	<color name="Indigoback">#804B0082</color>
+	<color name="blueback">#8000a0ff</color>
+	<color name="whiteback">#80ffffff</color>
+	<color name="lightgrayback">#80D3D3D3</color>
+	<color name="gray">#808080</color>
+	<color name="red">#ff0000</color>
+	<color name="orange">#ffa500</color>
+	<color name="image_text">#005a73</color>
+	<color name="image_text_press">#00e1ff</color>
+	<color name="actionbar_text">#FFFFFF</color>
+</resources>

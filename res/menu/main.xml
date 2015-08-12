@@ -1,0 +1,27 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:com.example.tesis.v3="http://schemas.android.com/apk/res-auto" >
+
+    <item
+        android:id="@+id/reload_setting"
+        android:icon="@android:drawable/ic_popup_sync"
+        android:orderInCategory="100"
+        android:title="@string/reload_settings"
+        com.example.tesis.v3:showAsAction="ifRoom"/>
+    <!-- android:title="@string/filter_menu_item" -->
+    <item
+        android:id="@+id/datePicker_setting"
+        android:icon="@android:drawable/ic_menu_my_calendar"
+        android:orderInCategory="100"
+        android:title="@string/datePicker_settings"
+        com.example.tesis.v3:showAsAction="ifRoom"/>
+    <!-- android:title="@string/filter_menu_item" -->
+
+    <item
+        android:id="@+id/action_settings"
+        android:icon="@android:drawable/ic_menu_preferences"
+        android:orderInCategory="100"
+        android:title="@string/action_settings"
+        com.example.tesis.v3:showAsAction="ifRoom"/>
+    <!-- android:title="@string/date_menu_item" -->
+
+</menu>
