@@ -670,11 +670,11 @@ public class setupGoogleMap {
 	int seekBarProgress;
 	// , seekBarCh2;
 	int lastProgress = 0;
-	String[] geoMapStrings = { "CWB", "gCAP", "P-alert" };
+	String[] geoMapStrings = { "CWB", "P-alert" };
 	// checkBox data 100,101,102
 	int geoMapStringsSelcted = 0;
-	String[] ballStrings = { "gCAP", "BATS", "Auto_BATS", "FMNEAR" };
-	// checkbox data 201,202,203,204
+	String[] ballStrings = { "gCAP", "BATS", "Auto_BATS", "FMNEAR", "W-Phase", "RMT" };
+	// checkbox data 201,202,203,204,205,206
 	int ballStringSelcted = 0;
 	myArrayAdapter<String> arrayAdapterCh1, arrayAdapterCh2;
 
@@ -918,15 +918,15 @@ public class setupGoogleMap {
 										spinnerBtn1
 												.setText(geoMapStrings[which]);
 										mCheckBoxData.put(100, false); // CWB
-										mCheckBoxData.put(101, false); // gCap
+//										mCheckBoxData.put(101, false); // gCap
 										mCheckBoxData.put(102, false); // P-alert
 										switch (which) {
 										case 0:
 											mCheckBoxData.put(100, true);
 											break;
-										case 1:
-											mCheckBoxData.put(101, true);
-											break;
+//										case 1:
+//											mCheckBoxData.put(101, true);
+//											break;
 										case 2:
 											mCheckBoxData.put(102, true);
 											break;
@@ -949,7 +949,11 @@ public class setupGoogleMap {
 			spinnerBtn2.setText(ballStrings[2]);
 		} else if (mCheckBoxData.get(204)) {
 			spinnerBtn2.setText(ballStrings[3]);
-		}
+		} else if (mCheckBoxData.get(205)) {
+            spinnerBtn2.setText(ballStrings[4]);
+        } else if (mCheckBoxData.get(206)) {
+            spinnerBtn2.setText(ballStrings[5]);
+        }
 		spinnerBtn2.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -968,6 +972,8 @@ public class setupGoogleMap {
 										mCheckBoxData.put(202, false);// BATS
 										mCheckBoxData.put(203, false);// New_BATS
 										mCheckBoxData.put(204, false);// FMNEAR
+                                        mCheckBoxData.put(205, false);// W-Phase
+                                        mCheckBoxData.put(206, false);// RMT
 										switch (which) {
 										case 0:
 											mCheckBoxData.put(201, true);
@@ -981,7 +987,12 @@ public class setupGoogleMap {
 										case 3:
 											mCheckBoxData.put(204, true);
 											break;
-
+                                        case 4:
+                                            mCheckBoxData.put(205, true);
+                                            break;
+                                        case 5:
+                                            mCheckBoxData.put(206, true);
+                                            break;
 										default:
 											break;
 										}
@@ -1093,8 +1104,8 @@ public class setupGoogleMap {
 			// seekBar.setVisibility(View.VISIBLE);
 			if (mCheckBoxData.get(100)) {
 				mapOverlay.draw(10, (float) seekBarProgress / 100);
-			} else if (mCheckBoxData.get(101)) {
-				mapOverlay.draw(9, (float) seekBarProgress / 100);
+//			} else if (mCheckBoxData.get(101)) {
+//				mapOverlay.draw(9, (float) seekBarProgress / 100);
 			} else if (mCheckBoxData.get(102)) {
 				mapOverlay.draw(15, (float) seekBarProgress / 100);
 			}
@@ -1121,7 +1132,11 @@ public class setupGoogleMap {
 				mapOverlay.draw(19, (float) 0);
 			} else if (mCheckBoxData.get(204)) {
 				mapOverlay.draw(20, (float) 0);
-			}
+			} else if (mCheckBoxData.get(205)) {
+                mapOverlay.draw(24, (float) 0);
+            } else if (mCheckBoxData.get(206)) {
+                mapOverlay.draw(25, (float) 0);
+            }
 
 		} else {
 			// mapOverlay.draw(1, (float) 0);
@@ -1133,11 +1148,14 @@ public class setupGoogleMap {
 			mapOverlay.isDraw18 = false;
 			mapOverlay.isDraw19 = false;
 			mapOverlay.isDraw20 = false;
+            mapOverlay.isDraw24 = false;
+            mapOverlay.isDraw25 = false;
 			// mCheckBoxData.put(201, false);// gCAP
 			// mCheckBoxData.put(202, false);// BATS
 			// mCheckBoxData.put(203, false);// New_BATS
 			// mCheckBoxData.put(204, false);// FMNEAR
-
+            // mCheckBoxData.put(205, false);// W-Phase
+            // mCheckBoxData.put(206, false);// RMT
 		}
 
 		if (mCheckBoxData.get(11)) { // 震間變形

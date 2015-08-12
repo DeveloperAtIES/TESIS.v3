@@ -152,7 +152,7 @@ public class EarthquakeData {
 					.getJSONfromURL("http://tesis.earth.sinica.edu.tw/common/"
 							+ "php/processdatamobile.php?" + "firstid='"
 							+ from_id + "'&secondid='" + to_id + "'");
-			// Log.d("Here!", json.toString());
+			Log.d("Here!", json.toString());
 			if (json == null) {
 				// TODO make Toast
 				Log.d("myTag", "Download EQ content error.");
@@ -339,6 +339,10 @@ public class EarthquakeData {
 
             // 0713 add tectonic
             map.put("Tectonic", e.getString("Tectonic"));
+
+            // 0812 add volleyball
+            map.put("WP", e.getString("WP"));
+            map.put("RMT", e.getString("RMT"));
 
 		} catch (JSONException error) {
 			Log.e("myLog", "Error parsing data " + error.toString());

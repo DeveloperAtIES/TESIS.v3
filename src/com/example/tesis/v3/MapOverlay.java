@@ -514,11 +514,11 @@ public class MapOverlay implements Serializable {
 	// AsyncTask<String, Void, Void> TaskDownloadBall;
 
 	String[] getVolleyballDescription(String gCAPLink, String NewBatsLink,
-			String FMNEARLink) {
-		String[] descriptionLinks = new String[4];
-		// Log.d("string","gCAPLink "+gCAPLink);
+			String FMNEARLink, String WPLink, String RMTLink) {
+		String[] descriptionLinks = new String[6];
+		Log.d("string","gCAPLink "+gCAPLink);
 		int lastIndex = gCAPLink.lastIndexOf("/");
-		// Log.d("string","gCAPLink index of /:"+lastIndex);
+		Log.d("string","gCAPLink index of /:"+lastIndex);
 		String header = gCAPLink.substring(0, lastIndex + 1);
 		descriptionLinks[0] = header.concat("mt.best");
 		descriptionLinks[1] = header.concat("mtt.best");
@@ -526,10 +526,25 @@ public class MapOverlay implements Serializable {
 		lastIndex = NewBatsLink.lastIndexOf("_");
 		header = NewBatsLink.substring(0, lastIndex + 1);
 		descriptionLinks[2] = header.concat("cmtsol.txt");
+
+        // 0812 add WP, RMT
+        lastIndex = gCAPLink.lastIndexOf("/");
+        header = gCAPLink.substring(0, lastIndex+1);
+        header = header.replace("CAP","WP");
+        descriptionLinks[4] = header.concat("WPsol.txt");
+
+        lastIndex = gCAPLink.lastIndexOf("/");
+        header = gCAPLink.substring(0, lastIndex);
+        int dateIndex = header.lastIndexOf("/");
+        String date = header.substring(dateIndex);
+        header = header.replace("CAP","RMT");
+        descriptionLinks[5] = header.concat(date+".rmt.sol");
 		Log.d("string", "descriptionLinks[0]:" + descriptionLinks[0]);
 		Log.d("string", "descriptionLinks[1]:" + descriptionLinks[1]);
 		Log.d("string", "descriptionLinks[2]:" + descriptionLinks[2]);
 		Log.d("string", "descriptionLinks[3]:" + descriptionLinks[3]);
+        Log.d("string", "descriptionLinks[3]:" + descriptionLinks[4]);
+        Log.d("string", "descriptionLinks[3]:" + descriptionLinks[5]);
 		return descriptionLinks;
 	}
 
@@ -546,7 +561,7 @@ public class MapOverlay implements Serializable {
 		// TaskDownloadBall = new downloadBall().execute(hMap.get("gCAP"),
 		// hMap.get("BATS"), hMap.get("New_BATS"), hMap.get("FMNEAR"));
 		VdescriptionLinks = getVolleyballDescription(hMap.get("gCAP"),
-				hMap.get("New_BATS"), hMap.get("FMNEAR"));
+				hMap.get("New_BATS"), hMap.get("FMNEAR"), hMap.get("WP"), hMap.get("RMT"));
 
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
 			// TaskLoadResource = new
@@ -554,11 +569,12 @@ public class MapOverlay implements Serializable {
 			TaskDownloadBall = (downloadBall) new downloadBall()
 					.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,
 							hMap.get("gCAP"), hMap.get("BATS"),
-							hMap.get("New_BATS"), hMap.get("FMNEAR"));
+							hMap.get("New_BATS"), hMap.get("FMNEAR"),
+                            hMap.get("WP"), hMap.get("RMT"));
 		else
 			TaskDownloadBall = (downloadBall) new downloadBall().execute(
 					hMap.get("gCAP"), hMap.get("BATS"), hMap.get("New_BATS"),
-					hMap.get("FMNEAR"));
+					hMap.get("FMNEAR"), hMap.get("WP"), hMap.get("RMT"));
 		// markerOptionsList = new MarkerOptions[earthquakeArrayList.size()];
 		// circleOptionsList = new CircleOptions[earthquakeArrayList.size()];
 		// pgvLinks = new String[earthquakeArrayList.size()];
@@ -669,7 +685,8 @@ public class MapOverlay implements Serializable {
 	boolean isDraw2 = false, isDraw9 = false, isDraw10 = false,
 			isDraw15 = false, isDraw17 = false, isDraw18 = false,
 			isDraw19 = false, isDraw20 = false, isDraw21 = false,
-			isDraw22 = false, isDraw23 = false;
+			isDraw22 = false, isDraw23 = false, isDraw24 = false,
+            isDraw25 = false;
 
 	public void draw(int actionNumber, float trans) {
 		Log.d("Here!!", "draw:" + actionNumber);
@@ -1020,7 +1037,33 @@ public class MapOverlay implements Serializable {
 				mMap.addMarker(markerStarOption);
 			}
 			break;
-		}
+
+
+        case 24: //W-Phase
+            if (ballisLoad[4]) {
+                mMap.addMarker(ballOptions[4]);
+            } else {
+                if (!isDraw24) {
+                    Toast.makeText(fActivity.getApplicationContext(),
+                            "本地震尚無此震源機制資料", Toast.LENGTH_SHORT).show();
+                }
+            }
+            isDraw20 = true;
+            break;
+        case 25: //RMT
+            if (ballisLoad[5]) {
+                mMap.addMarker(ballOptions[5]);
+            } else {
+                if (!isDraw25) {
+                    Toast.makeText(fActivity.getApplicationContext(),
+                            "本地震尚無此震源機制資料", Toast.LENGTH_SHORT).show();
+                }
+            }
+            isDraw20 = true;
+            break;
+        default:
+            break;
+        }
 	}
 
 	// /////////////////////////End of Draw////////////////////////////////////
@@ -1317,7 +1360,7 @@ public class MapOverlay implements Serializable {
 	}
 
 	public MarkerOptions[] ballOptions;
-	protected Boolean[] ballisLoad = { false, false, false, false };
+	protected Boolean[] ballisLoad = { false, false, false, false, false, false };
 
 	class downloadBall extends AsyncTask<String, Void, Void> {
 		public boolean isTaskCancel = false;
@@ -1364,6 +1407,12 @@ public class MapOverlay implements Serializable {
 					case 3:
 						content = getFMNEARContent();
 						break;
+                    case 4:
+                        content = getWPhaseContent();
+                        break;
+                    case 5:
+                        content = getRMTContent();
+                        break;
 					}
 					ballOptions[i] = new MarkerOptions()
 							.position(new LatLng(lat, lng))
@@ -1716,6 +1765,18 @@ public class MapOverlay implements Serializable {
 		}
 		return content;
 	}
+
+    String getWPhaseContent(){
+        String content = null;
+
+        return content;
+    }
+
+    String getRMTContent(){
+        String content = null;
+
+        return content;
+    }
 
 	boolean isloadResourceFinished = false;
 

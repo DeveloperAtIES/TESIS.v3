@@ -24,9 +24,9 @@ public class ConstantVariables {
 	// Progress bar text
 	public static final String[] LoadingText = { "資料下載中，請保持網路暢通。", "資料量大或網路過慢時，\n將費時較久，請耐心等候。", "第一次下載後，\n將自動儲存地震列表基本資訊，\n供離線使用。" };
 	// notice: 如果有改過MAX_STORED_EQ_LENGTH，那麼generalFilename跟newestIDFilename都要改。
-	public static final String generalFilename = "TESIS.earthquakeList.general.data.20150712";
-	public static final String newestIDFilename = "TESIS.newest.earthquake.id.20150712";
-    public static final String newestSendNFFilename = "TESIS.newist.notification.eq.id.20150712";
+	public static final String generalFilename = "TESIS.earthquakeList.general.data.20150812";
+	public static final String newestIDFilename = "TESIS.newest.earthquake.id.20150812";
+    public static final String newestSendNFFilename = "TESIS.newist.notification.eq.id.20150812";
 	// public static final String lastOpenedIDFilename =
 	// "TESIS.newest.earthquake.id.last";
 	public static final String settingPreferenceFilename = "TESIS.earthquakeList.setting";
