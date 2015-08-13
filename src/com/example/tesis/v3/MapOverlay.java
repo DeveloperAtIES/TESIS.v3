@@ -1,5 +1,32 @@
 package com.example.tesis.v3;
 
+import android.content.res.AssetManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
+import android.os.Build;
+import android.os.Handler;
+import android.os.Message;
+import android.util.DisplayMetrics;
+import android.util.Log;
+import android.view.View;
+import android.widget.Toast;
+
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.CircleOptions;
+import com.google.android.gms.maps.model.GroundOverlayOptions;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.PolylineOptions;
+import com.google.android.gms.maps.model.TileOverlayOptions;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -10,42 +37,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.StringTokenizer;
-import java.lang.Math;
-
-import android.R.integer;
-import android.R.string;
-import android.content.res.AssetManager;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.Paint.Style;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-import android.os.AsyncTask;
-import android.os.Build;
-import android.os.Handler;
-import android.os.Message;
-import android.text.format.Time;
-import android.util.DisplayMetrics;
-import android.util.Log;
-import android.view.View;
-import android.widget.Toast;
-
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.model.BitmapDescriptor;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.Circle;
-import com.google.android.gms.maps.model.CircleOptions;
-import com.google.android.gms.maps.model.GroundOverlayOptions;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.LatLngBounds;
-import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.maps.model.PolylineOptions;
-import com.google.android.gms.maps.model.TileOverlayOptions;
-import com.google.android.gms.maps.model.TileProvider;
 
 public class MapOverlay implements Serializable {
 	private static final long serialVersionUID = 123456789;
@@ -1768,13 +1759,108 @@ public class MapOverlay implements Serializable {
 
     String getWPhaseContent(){
         String content = null;
+		Double tmpDouble;
+		int tmpInt;
+		try {
+			URL url = new URL(VdescriptionLinks[4]);
+			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+			conn.setDoInput(true);
+			conn.connect();
+			InputStream is = conn.getInputStream();
+			BufferedReader bufferedReader = new BufferedReader(
+					new InputStreamReader(is));
+			String s = bufferedReader.readLine();
+			s = bufferedReader.readLine();
+			s = bufferedReader.readLine();
+			Log.d("string", "W-Phase:" + s);
 
+			StringTokenizer st = new StringTokenizer(s,";");
+			st.nextToken();
+			st.nextToken();
+			st.nextToken();
+			String Ts = st.nextToken();
+			Log.d("string", "W-Phase Ts:" + Ts);
+
+			s = bufferedReader.readLine();
+			st = new StringTokenizer(s,";");
+			String Mw = st.nextToken();
+			String gap = st.nextToken();
+			String channel = st.nextToken();
+			Log.d("string", "W-Phase Mw,gap,#channel:" + Mw +","+ gap +","+ channel);
+
+			s = bufferedReader.readLine();
+			st = new StringTokenizer(s,";");
+			String strike1 = st.nextToken();
+			String dip1 = st.nextToken();
+			String slip1 = st.nextToken();
+			String strike2 = st.nextToken();
+			String dip2 = st.nextToken();
+			String slip2 = st.nextToken();
+
+			Log.d("string", "W-Phase NP1:" + strike1 +","+ dip1 +","+ slip1);
+
+			content = "NP1:\t" + strike1 + "\u00B0\t/\t" + dip1 + "\u00B0\t/\t"
+					+ slip1 + "\u00B0\n" + "NP2:\t" + strike2 + "\u00B0\t/\t"
+					+ dip2 + "\u00B0\t/\t" + slip2 + "\u00B0\n" + "Mw: " + Mw
+					+ "\tTs: " + Ts + "\ngap: " + gap + "\t#channel:" + channel;
+		} catch (Exception e) {
+			e.printStackTrace();
+			content = null;
+		}
         return content;
     }
 
     String getRMTContent(){
         String content = null;
+		Double tmpDouble;
+		int tmpInt;
+		try {
+			URL url = new URL(VdescriptionLinks[5]);
+			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+			conn.setDoInput(true);
+			conn.connect();
+			InputStream is = conn.getInputStream();
+			BufferedReader bufferedReader = new BufferedReader(
+					new InputStreamReader(is));
+			String s = bufferedReader.readLine();
+			Log.d("string", "RMT:" + s);
+			StringTokenizer st = new StringTokenizer(s, ";");
+			st.nextToken();
+			st.nextToken();
+			st.nextToken();
+			st.nextToken();
+			String depth = st.nextToken();
+			String ml = st.nextToken();
 
+			s = bufferedReader.readLine();
+			s = bufferedReader.readLine();
+			st = new StringTokenizer(s, ";");
+			String strike1 = st.nextToken();
+			String dip1 = st.nextToken();
+			String slip1 = st.nextToken();
+			String strike2 = st.nextToken();
+			String dip2 = st.nextToken();
+			String slip2 = st.nextToken();
+
+			s = bufferedReader.readLine();
+			st = new StringTokenizer(s, ";");
+			String Misfit = st.nextToken();
+
+			s = bufferedReader.readLine();
+			st = new StringTokenizer(s, ";");
+			String iso = st.nextToken();
+			String DC = st.nextToken();
+			String CLVD = st.nextToken();
+
+			content = "NP1:\t" + strike1 + "\u00B0\t/\t" + dip1 + "\u00B0\t/\t"
+					+ slip1 + "\u00B0\n" + "NP2:\t" + strike2 + "\u00B0\t/\t"
+					+ dip2 + "\u00B0\t/\t" + slip2 + "\u00B0\n" + "ML: " + ml
+					+ "\t" + "Depth: " + depth + "km\n" + "Misfit: " +Misfit + "%\n"
+					+ "ISO: " + iso +"%\t" + "DC: " + DC + "%\t" + "CLVD: " + CLVD+ "%";
+		} catch (Exception e) {
+			e.printStackTrace();
+			content = null;
+		}
         return content;
     }
 
